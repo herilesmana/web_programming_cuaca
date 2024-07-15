@@ -11,9 +11,18 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-3 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('informasi-cuaca')" :active="request()->routeIs('informasi-cuaca')">
+                        {{ __('Informasi Cuaca') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('laporan-banjir')" :active="request()->routeIs('laporan-banjir')">
+                        {{ __('Laporan Banjir') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('materi-edukasi')" :active="request()->routeIs('materi-edukasi')">
+                        {{ __('Materi Edukasi') }}
                     </x-nav-link>
                 </div>
             </div>

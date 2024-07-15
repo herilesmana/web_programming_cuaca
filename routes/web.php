@@ -22,6 +22,18 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/informasi-cuaca', function () {
+    return view('informasi-cuaca');
+})->middleware(['auth', 'verified'])->name('informasi-cuaca');
+
+Route::get('/laporan-banjir', function () {
+    return view('laporan-banjir');
+})->middleware(['auth', 'verified'])->name('laporan-banjir');
+
+Route::get('/materi-edukasi', function () {
+    return view('materi-edukasi');
+})->middleware(['auth', 'verified'])->name('materi-edukasi');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
