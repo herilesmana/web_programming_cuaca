@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class InformasiCuacaController extends Controller
+class DashboardController extends Controller
 {
     public function index(Request $request)
     {
@@ -14,13 +14,13 @@ class InformasiCuacaController extends Controller
 
         if($id_lokasi != null) {
             $cuaca = json_decode(file_get_contents('https://ibnux.github.io/BMKG-importer/cuaca/' . $id_lokasi . '.json'), true);
+
+            $cuaca = collect($cuaca)->map(function($item) {
+                $item['cuaca'] = $item['cuaca'] == '' ? 'Cerah' : $item['cuaca'];
+    
+                return $item;
+            });
         }
-
-        $cuaca = collect($cuaca)->map(function($item) {
-            $item['cuaca'] = $item['cuaca'] == '' ? 'Cerah' : $item['cuaca'];
-
-            return $item;
-        });
 
         $cuaca_terkini = [];
         
@@ -35,7 +35,7 @@ class InformasiCuacaController extends Controller
             }
         }
 
-        return view('informasi-cuaca', [
+        return view('dashboard', [
             'id_lokasi' => $id_lokasi,
             'cuaca' => $cuaca,
             'cuaca_terkini' => $cuaca_terkini

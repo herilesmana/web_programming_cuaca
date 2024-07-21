@@ -16,8 +16,14 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        // Ambil lokasi dari sini https://ibnux.github.io/BMKG-importer/cuaca/wilayah.json
+        $lokasi = json_decode(file_get_contents('https://ibnux.github.io/BMKG-importer/cuaca/wilayah.json'), true);
+
+        // dd($lokasi);
+        
         return view('profile.edit', [
             'user' => $request->user(),
+            'lokasi' => $lokasi
         ]);
     }
 

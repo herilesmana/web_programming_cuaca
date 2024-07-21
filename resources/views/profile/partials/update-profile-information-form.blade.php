@@ -1,3 +1,9 @@
+{{-- Jquery --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- Select2 --}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -27,24 +33,24 @@
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
+        </div>
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800">
-                        {{ __('Your email address is unverified.') }}
+        {{-- Select lokasi --}}
+        <div>
+            <x-input-label for="lokasi" :value="__('Lokasi')" />
+            <select id="lokasi" name="id_lokasi" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                <option value="">{{ __('Pilih Lokasi') }}</option>
+                @foreach ($lokasi as $wilayah)
+                    <option value="{{ $wilayah['id'] }}" {{ old('id_lokasi', $user->id_lokasi) == $wilayah['id'] ? 'selected' : '' }}>{{ $wilayah['kota'] }}</option>
+                @endforeach
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('lokasi')" />
+        </div>
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
+        <div>
+            <x-input-label for="kota_lokasi" :value="__('Kota')" />
+            <x-text-input id="kota_lokasi" name="kota_lokasi" type="text" class="mt-1 block w-full" readonly :value="old('kota_lokasi', $user->kota_lokasi)" required autocomplete="Kota" />
+            <x-input-error class="mt-2" :messages="$errors->get('kota_lokasi')" />
         </div>
 
         <div class="flex items-center gap-4">
@@ -62,3 +68,18 @@
         </div>
     </form>
 </section>
+
+<script>
+    const lokasi = document.getElementById('lokasi');
+    const kotaLokasi = document.getElementById('kota_lokasi');
+
+    // When select2 is changed with function khusus select2
+    $('#lokasi').on('select2:select', function (e) {
+        const data = e.params.data;
+        kotaLokasi.value = data.text;
+    });
+
+    $(document).ready(function() {
+        $('#lokasi').select2();
+    });
+</script>
