@@ -9,10 +9,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if(auth()->user()->role == 'admin')
-            <button class="bg-slate-500 hover:bg-slate-600 text-white p-3 rounded px-5">
+            <button id="button-form" class="bg-slate-500 hover:bg-slate-600 text-white p-3 rounded px-5">
                 Buat Materi
             </button>
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-3">
+            <div id="container-form" class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-3" style="display: none">
                 <div class="p-6 text-gray-900 font-bold">
                     {{ __("Materi Baru") }}
                 </div>
@@ -66,3 +66,20 @@
         </div>
     </div>
 </x-app-layout>
+
+@if(auth()->user()->role == 'admin')
+
+<script>
+    const buttonForm = document.getElementById('button-form');
+    const containerForm = document.getElementById('container-form');
+
+    buttonForm.addEventListener('click', () => {
+        if(containerForm.style.display === 'none') {
+            containerForm.style.display = 'block';
+        } else {
+            containerForm.style.display = 'none';
+        }
+    });
+</script>
+
+@endif
